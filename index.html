@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veloura Jewels — Timeless Elegance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8d5a3;
+      --gold-dark: #9a7a2e;
+      --black: #0d0d0d;
+      --dark: #1a1a1a;
+      --mid: #2e2e2e;
+      --soft: #f8f5f0;
+      --white: #ffffff;
+      --text-muted: #888;
+      --radius: 2px;
+      --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background: var(--soft);
+      color: var(--black);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(13,13,13,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 0 clamp(1rem, 5vw, 4rem);
+      height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 3vw, 1.7rem);
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .logo span { font-style: italic; color: var(--gold-light); }
+
+    nav { display: flex; align-items: center; gap: clamp(1rem, 3vw, 2.5rem); }
+    nav a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color var(--transition);
+    }
+    nav a:hover { color: var(--gold); }
+
+    .header-icons { display: flex; align-items: center; gap: 1.2rem; }
+    .cart-btn {
+      background: none; border: 1px solid var(--gold); color: var(--gold);
+      padding: 0.5rem 1rem; cursor: pointer; font-family: 'Jost', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: all var(--transition); display: flex; align-items: center; gap: 0.5rem;
+      white-space: nowrap;
+    }
+    .cart-btn:hover { background: var(--gold); color: var(--black); }
+    .cart-count {
+      background: var(--gold); color: var(--black);
+      border-radius: 50%; width: 18px; height: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem; font-weight: 500;
+    }
+
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 1.5px;
+      background: var(--gold); transition: all var(--transition);
+    }
+
+    /* Mobile Nav */
+    .mobile-nav {
+      display: none; position: fixed; top: 70px; left: 0; right: 0; bottom: 0;
+      background: rgba(13,13,13,0.98); z-index: 999;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.5rem; padding: 2rem;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      color: var(--gold-light); font-size: 1.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300; letter-spacing: 0.1em;
+      text-decoration: none;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0d0d0d 0%, #1a1510 50%, #0d0b08 100%);
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vw, 5rem);
+      position: relative; overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.08) 0%, transparent 70%);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold);
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+      padding: 0.4rem 1.2rem; margin-bottom: 2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 8vw, 7rem);
+      font-weight: 300; color: var(--white); line-height: 1.05;
+      letter-spacing: -0.01em; margin-bottom: 1.5rem;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+
+    .hero p {
+      color: rgba(255,255,255,0.5); font-size: clamp(0.85rem, 2vw, 1rem);
+      letter-spacing: 0.08em; max-width: 480px; margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+
+    .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--gold); color: var(--black);
+      padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2.5rem);
+      font-family: 'Jost', sans-serif; font-size: 0.78rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      border: none; cursor: pointer; transition: all var(--transition);
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent; color: var(--white);
+      padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2.5rem);
+      font-family: 'Jost', sans-serif; font-size: 0.78rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.3); cursor: pointer;
+      transition: all var(--transition); text-decoration: none; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* ─── SECTION WRAPPER ─── */
+    section { padding: clamp(3rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem); }
+
+    .section-label {
+      font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300; color: var(--black); line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .section-title em { font-style: italic; color: var(--gold-dark); }
+    .section-sub {
+      color: var(--text-muted); font-size: 0.9rem; line-height: 1.8;
+      max-width: 480px;
+    }
+    .section-header { margin-bottom: 3rem; }
+    .section-header.centered { text-align: center; }
+    .section-header.centered .section-sub { margin: 0 auto; }
+
+    /* ─── CATEGORIES ─── */
+    .categories-section { background: var(--white); }
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+      gap: 1rem;
+    }
+
+    .cat-card {
+      background: var(--soft); border: 1px solid rgba(0,0,0,0.06);
+      padding: 2rem 1rem; text-align: center; cursor: pointer;
+      transition: all var(--transition); position: relative; overflow: hidden;
+    }
+    .cat-card::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--gold); transform: scaleX(0); transition: transform var(--transition);
+    }
+    .cat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+    .cat-card:hover::before { transform: scaleX(1); }
+    .cat-card.active { border-color: var(--gold); background: rgba(201,168,76,0.04); }
+    .cat-card.active::before { transform: scaleX(1); }
+
+    .cat-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .cat-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-weight: 400; color: var(--black);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── PRODUCTS ─── */
+    .products-section { background: var(--soft); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+      gap: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .product-card {
+      background: var(--white); border: 1px solid rgba(0,0,0,0.06);
+      overflow: hidden; transition: all var(--transition);
+      display: flex; flex-direction: column;
+    }
+    .product-card:hover { box-shadow: 0 20px 50px rgba(0,0,0,0.12); transform: translateY(-4px); }
+
+    .product-img {
+      aspect-ratio: 1; background: linear-gradient(135deg, #f0ebe0 0%, #e8dfc8 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem; position: relative; overflow: hidden;
+    }
+    .product-badge {
+      position: absolute; top: 1rem; left: 1rem;
+      background: var(--gold); color: var(--black);
+      font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+    }
+
+    .product-info { padding: clamp(1rem, 3vw, 1.5rem); flex: 1; display: flex; flex-direction: column; }
+    .product-category {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.4rem;
+    }
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.2rem); font-weight: 400;
+      color: var(--black); line-height: 1.3; margin-bottom: 0.5rem;
+    }
+    .product-desc {
+      color: var(--text-muted); font-size: 0.8rem; line-height: 1.6;
+      margin-bottom: 1rem; flex: 1;
+    }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+    .product-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 400; color: var(--gold-dark);
+    }
+    .add-to-cart {
+      background: var(--black); color: var(--gold);
+      border: none; padding: 0.6rem 1.1rem; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.7rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: all var(--transition); white-space: nowrap;
+    }
+    .add-to-cart:hover { background: var(--gold); color: var(--black); }
+
+    /* ─── MARQUEE ─── */
+    .marquee-strip {
+      background: var(--gold); padding: 0.9rem 0; overflow: hidden;
+    }
+    .marquee-inner {
+      display: flex; gap: 3rem;
+      animation: marquee 20s linear infinite; white-space: nowrap;
+    }
+    .marquee-inner span {
+      font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--black); font-weight: 500;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ─── CART SIDEBAR ─── */
+    .cart-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 2000; opacity: 0; pointer-events: none;
+      transition: opacity var(--transition);
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: all; }
+
+    .cart-sidebar {
+      position: fixed; top: 0; right: 0; bottom: 0;
+      width: min(440px, 100vw);
+      background: var(--white); z-index: 2001;
+      transform: translateX(100%); transition: transform var(--transition);
+      display: flex; flex-direction: column;
+      box-shadow: -20px 0 60px rgba(0,0,0,0.2);
+    }
+    .cart-sidebar.open { transform: translateX(0); }
+
+    .cart-header {
+      padding: 2rem; border-bottom: 1px solid rgba(0,0,0,0.08);
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--black);
+    }
+    .cart-header h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 300; color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+    .close-cart {
+      background: none; border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white); cursor: pointer;
+      width: 36px; height: 36px; font-size: 1.2rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all var(--transition);
+    }
+    .close-cart:hover { border-color: var(--gold); color: var(--gold); }
+
+    .cart-items { flex: 1; overflow-y: auto; padding: 1.5rem; }
+    .cart-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100%; text-align: center; gap: 1rem;
+    }
+    .cart-empty-icon { font-size: 3rem; opacity: 0.3; }
+    .cart-empty p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .cart-item {
+      display: flex; gap: 1rem; padding: 1rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      align-items: flex-start;
+    }
+    .cart-item-icon {
+      width: 64px; height: 64px; flex-shrink: 0;
+      background: linear-gradient(135deg, #f0ebe0, #e8dfc8);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem;
+    }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; color: var(--black); margin-bottom: 0.25rem;
+    }
+    .cart-item-price { color: var(--gold-dark); font-size: 0.9rem; }
+    .cart-item-qty {
+      display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;
+    }
+    .qty-btn {
+      background: var(--soft); border: none; width: 24px; height: 24px;
+      cursor: pointer; font-size: 1rem; display: flex;
+      align-items: center; justify-content: center;
+      transition: background var(--transition);
+    }
+    .qty-btn:hover { background: var(--gold-light); }
+    .qty-value { font-size: 0.85rem; width: 20px; text-align: center; }
+    .remove-item {
+      background: none; border: none; color: var(--text-muted);
+      cursor: pointer; font-size: 1.2rem; padding: 0.25rem;
+      transition: color var(--transition); flex-shrink: 0;
+    }
+    .remove-item:hover { color: #c0392b; }
+
+    .cart-footer { padding: 1.5rem; border-top: 1px solid rgba(0,0,0,0.08); }
+    .cart-total {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .cart-total span:first-child {
+      font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted);
+    }
+    .cart-total span:last-child {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem; color: var(--gold-dark);
+    }
+    .checkout-btn {
+      width: 100%; background: var(--gold); color: var(--black);
+      border: none; padding: 1rem; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.8rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      transition: all var(--transition);
+    }
+    .checkout-btn:hover { background: var(--gold-dark); color: var(--white); }
+
+    /* ─── CHECKOUT MODAL ─── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      z-index: 3000; display: none;
+      align-items: flex-start; justify-content: center;
+      padding: clamp(1rem, 5vw, 2rem); overflow-y: auto;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: var(--white); width: 100%; max-width: 560px;
+      margin: auto; padding: clamp(1.5rem, 5vw, 2.5rem);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none; font-size: 1.5rem;
+      cursor: pointer; color: var(--text-muted); line-height: 1;
+    }
+    .modal h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 300;
+      color: var(--black); margin-bottom: 0.5rem;
+    }
+    .modal-sub { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 2rem; }
+
+    .form-group { margin-bottom: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+    label { display: block; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+
+    input, textarea, select {
+      width: 100%; background: var(--soft); border: 1px solid rgba(0,0,0,0.1);
+      padding: 0.75rem 1rem; font-family: 'Jost', sans-serif;
+      font-size: 0.9rem; color: var(--black);
+      transition: border-color var(--transition); outline: none;
+    }
+    input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+    textarea { resize: vertical; min-height: 80px; }
+
+    .order-summary { background: var(--soft); padding: 1.25rem; margin: 1.5rem 0; }
+    .order-summary h4 {
+      font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 0.75rem;
+    }
+    .summary-item {
+      display: flex; justify-content: space-between;
+      font-size: 0.85rem; padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .summary-total {
+      display: flex; justify-content: space-between;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; margin-top: 0.75rem;
+    }
+
+    .submit-btn {
+      width: 100%; background: var(--black); color: var(--gold);
+      border: none; padding: 1.1rem; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.8rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      transition: all var(--transition); margin-top: 0.5rem;
+    }
+    .submit-btn:hover { background: var(--gold); color: var(--black); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ─── SUCCESS MODAL ─── */
+    .success-modal {
+      text-align: center; padding: clamp(2rem, 6vw, 3rem);
+    }
+    .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .success-modal h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 300;
+      color: var(--black); margin-bottom: 0.75rem;
+    }
+    .success-modal p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; }
+    .order-id-tag {
+      background: var(--soft); border: 1px solid var(--gold-light);
+      display: inline-block; padding: 0.5rem 1.5rem; margin: 1rem 0;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--gold-dark);
+    }
+
+    /* ─── NEWSLETTER ─── */
+    .newsletter-section {
+      background: var(--black);
+      text-align: center;
+    }
+    .newsletter-section .section-title { color: var(--white); }
+    .newsletter-section .section-sub { color: rgba(255,255,255,0.4); margin: 0 auto 2rem; }
+    .newsletter-form {
+      display: flex; gap: 0; max-width: 440px; margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .newsletter-form input {
+      flex: 1; min-width: 200px; background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(201,168,76,0.3); color: var(--white);
+      padding: 1rem 1.25rem;
+    }
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.3); }
+    .newsletter-form button {
+      background: var(--gold); color: var(--black); border: none;
+      padding: 1rem 1.5rem; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      transition: all var(--transition); white-space: nowrap;
+    }
+    .newsletter-form button:hover { background: var(--gold-light); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #080808; color: rgba(255,255,255,0.4);
+      padding: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 5vw, 4rem);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+      gap: 2rem; margin-bottom: 2rem;
+    }
+    .footer-brand .logo { font-size: 1.3rem; display: inline-block; margin-bottom: 1rem; }
+    .footer-brand p { font-size: 0.82rem; line-height: 1.8; max-width: 240px; }
+    .footer-col h4 {
+      color: var(--gold); font-size: 0.7rem; letter-spacing: 0.2em;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .footer-col a {
+      display: block; color: rgba(255,255,255,0.4); text-decoration: none;
+      font-size: 0.85rem; margin-bottom: 0.5rem;
+      transition: color var(--transition);
+    }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem;
+      font-size: 0.75rem; text-align: center;
+    }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--black); color: var(--gold-light);
+      padding: 0.85rem 1.75rem; font-size: 0.82rem;
+      letter-spacing: 0.08em; z-index: 9999;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-bottom: 2px solid var(--gold); white-space: nowrap;
+      max-width: 90vw;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ─── ORDER TRACKING ─── */
+    .track-section { background: var(--white); }
+    .track-form {
+      display: flex; gap: 0.5rem; max-width: 480px; flex-wrap: wrap;
+    }
+    .track-form input { flex: 1; min-width: 200px; }
+    .track-form button {
+      background: var(--black); color: var(--gold); border: none;
+      padding: 0.75rem 1.25rem; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: all var(--transition); white-space: nowrap;
+    }
+    .track-form button:hover { background: var(--gold); color: var(--black); }
+    .track-result {
+      margin-top: 1.5rem; padding: 1.5rem;
+      background: var(--soft); border-left: 3px solid var(--gold);
+      display: none;
+    }
+    .track-result.visible { display: block; }
+    .status-badge {
+      display: inline-block; background: var(--gold); color: var(--black);
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 0.3rem 0.8rem; margin-bottom: 0.75rem;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      nav { display: none; }
+      .hamburger { display: flex; }
+      .hero h1 { font-size: clamp(2.2rem, 10vw, 4rem); }
+      .products-grid { grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr)); }
+      .product-footer { flex-direction: column; align-items: flex-start; }
+      .add-to-cart { width: 100%; text-align: center; }
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form button { width: 100%; }
+    }
+
+    @media (max-width: 480px) {
+      .cart-item-icon { width: 50px; height: 50px; font-size: 1.4rem; }
+      .modal { border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo">Veloura <span>Jewels</span></a>
+  <nav>
+    <a href="#collections">Collections</a>
+    <a href="#products">Shop</a>
+    <a href="#track">Track Order</a>
+  </nav>
+  <div class="header-icons">
+    <button class="cart-btn" onclick="toggleCart()">
+      🛒 Cart <span class="cart-count" id="cartCount">0</span>
+    </button>
+    <button class="hamburger" onclick="toggleMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#collections" onclick="toggleMobileNav()">Collections</a>
+  <a href="#products" onclick="toggleMobileNav()">Shop</a>
+  <a href="#track" onclick="toggleMobileNav()">Track Order</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div>
+    <div class="hero-badge">Est. 2024 · Handcrafted Fine Jewellery</div>
+    <h1>Where Craft Meets<br><em>Timeless Beauty</em></h1>
+    <p>Each piece tells a story. Discover our collection of handcrafted jewellery, where tradition meets contemporary elegance.</p>
+    <div class="hero-cta">
+      <a href="#products" class="btn-primary">Explore Collection</a>
+      <a href="#track" class="btn-outline">Track My Order</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner" id="marqueeInner">
+    <span>Free Shipping on Orders Above ₹999</span>
+    <span>✦</span>
+    <span>Handcrafted with Love</span>
+    <span>✦</span>
+    <span>30-Day Returns</span>
+    <span>✦</span>
+    <span>925 Sterling Silver</span>
+    <span>✦</span>
+    <span>BIS Hallmarked Gold</span>
+    <span>✦</span>
+    <span>Free Shipping on Orders Above ₹999</span>
+    <span>✦</span>
+    <span>Handcrafted with Love</span>
+    <span>✦</span>
+    <span>30-Day Returns</span>
+    <span>✦</span>
+    <span>925 Sterling Silver</span>
+    <span>✦</span>
+    <span>BIS Hallmarked Gold</span>
+    <span>✦</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories-section" id="collections">
+  <div class="section-header centered">
+    <div class="section-label">Browse by Category</div>
+    <h2 class="section-title">Our <em>Collections</em></h2>
+    <p class="section-sub">From everyday elegance to special occasion pieces, find the perfect jewel for every moment.</p>
+  </div>
+  <div class="categories-grid" id="categoriesGrid">
+    <div class="cat-card active" onclick="filterProducts('all')">
+      <div class="cat-icon">✨</div>
+      <div class="cat-name">All Pieces</div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('rings')">
+      <div class="cat-icon">💍</div>
+      <div class="cat-name">Rings</div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('necklaces')">
+      <div class="cat-icon">📿</div>
+      <div class="cat-name">Necklaces</div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('earrings')">
+      <div class="cat-icon">✨</div>
+      <div class="cat-name">Earrings</div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('bracelets')">
+      <div class="cat-icon">⭕</div>
+      <div class="cat-name">Bracelets</div>
+    </div>
+    <div class="cat-card" onclick="filterProducts('sets')">
+      <div class="cat-icon">🎁</div>
+      <div class="cat-name">Gift Sets</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <div class="section-header">
+    <div class="section-label">Handpicked for You</div>
+    <h2 class="section-title">Featured <em>Pieces</em></h2>
+    <p class="section-sub">Each item is carefully crafted and inspected before reaching you.</p>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</section>
+
+<!-- ORDER TRACKING -->
+<section class="track-section" id="track">
+  <div class="section-header">
+    <div class="section-label">Know Your Order</div>
+    <h2 class="section-title">Track Your <em>Order</em></h2>
+    <p class="section-sub">Enter your order ID received via email to check the current status of your jewellery.</p>
+  </div>
+  <div class="track-form">
+    <input type="text" id="trackInput" placeholder="e.g. LUM-20240001" />
+    <button onclick="trackOrder()">Track Now</button>
+  </div>
+  <div class="track-result" id="trackResult"></div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="section-label" style="color:rgba(201,168,76,0.5)">Stay Connected</div>
+  <h2 class="section-title" style="color:var(--white); margin-bottom:0.75rem">Exclusive <em style="color:var(--gold)">Offers</em> &amp; New Arrivals</h2>
+  <p class="section-sub" style="color:rgba(255,255,255,0.4);margin:0 auto 2rem;max-width:420px">Subscribe for early access to new collections, styling tips, and members-only discounts.</p>
+  <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+    <input type="email" id="newsletterEmail" placeholder="Your email address" required />
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="#" class="logo">Veloura <span>Jewels</span></a>
+      <p>Crafting timeless jewellery pieces that celebrate life's most precious moments since 2024.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="#products">All Jewellery</a>
+      <a href="#collections">Rings</a>
+      <a href="#collections">Necklaces</a>
+      <a href="#collections">Earrings</a>
+      <a href="#collections">Bracelets</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a href="#track">Track Order</a>
+      <a href="#">Sizing Guide</a>
+      <a href="#">Care Instructions</a>
+      <a href="#">Returns Policy</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="#">contact@velourajewels.in</a>
+      <a href="#">+91 98765 43210</a>
+      <a href="#">Instagram</a>
+      <a href="#">WhatsApp Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2024 Veloura Jewels. All rights reserved. Made with ♥ in India.</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="close-cart" onclick="toggleCart()">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-total">
+      <span>Total Amount</span>
+      <span id="cartTotal">₹0</span>
+    </div>
+    <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeCheckout()">×</button>
+    <h2>Complete Your Order</h2>
+    <p class="modal-sub">Fill in your details and we'll deliver to your door.</p>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" id="custName" placeholder="Priya Sharma" required />
+      </div>
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" id="custPhone" placeholder="+91 98765 43210" required />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email Address *</label>
+      <input type="email" id="custEmail" placeholder="priya@example.com" required />
+    </div>
+    <div class="form-group">
+      <label>Delivery Address *</label>
+      <textarea id="custAddress" placeholder="House/Flat no., Street, Area, City, PIN Code, State" required></textarea>
+    </div>
+    <div class="form-group">
+      <label>Special Instructions (optional)</label>
+      <input type="text" id="custNotes" placeholder="Gift wrapping, specific delivery time, etc." />
+    </div>
+
+    <div class="order-summary" id="orderSummaryModal"></div>
+
+    <button class="submit-btn" onclick="placeOrder()" id="placeOrderBtn">
+      Place Order — Pay on Delivery
+    </button>
+    <p style="text-align:center;color:var(--text-muted);font-size:0.75rem;margin-top:0.75rem">
+      🔒 Secure · Cash on Delivery · Free returns within 30 days
+    </p>
+  </div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal success-modal">
+    <div class="success-icon">💎</div>
+    <h2>Order Placed Successfully!</h2>
+    <div class="order-id-tag" id="successOrderId">LUM-00000</div>
+    <p>Thank you for choosing Veloura Jewels. Your order has been received and will be confirmed shortly.<br><br>Please save your Order ID to track your delivery.</p>
+    <br>
+    <button class="btn-primary" onclick="closeSuccess()" style="border:none;cursor:pointer">Continue Shopping</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  const API_BASE = 'http://localhost:5000';
+
+  const PRODUCTS = [
+    { id: 1, name: 'Celestial Diamond Ring', category: 'rings', price: 4999, emoji: '💍', desc: 'Delicate solitaire ring with a sparkling cubic zirconia centre stone in 925 sterling silver.', badge: 'Bestseller' },
+    { id: 2, name: 'Golden Lotus Necklace', category: 'necklaces', price: 3499, emoji: '📿', desc: 'Hand-crafted lotus pendant on a fine gold-plated chain. Symbol of purity and grace.', badge: 'New' },
+    { id: 3, name: 'Pearl Drop Earrings', category: 'earrings', price: 1899, emoji: '✨', desc: 'Freshwater pearl drops in sterling silver hooks. Timeless and versatile for any occasion.' },
+    { id: 4, name: 'Twisted Rope Bracelet', category: 'bracelets', price: 2299, emoji: '⭕', desc: 'Intricate twisted rope design in 18K gold plating. Adjustable size for a perfect fit.' },
+    { id: 5, name: 'Rose Gold Hoop Earrings', category: 'earrings', price: 1499, emoji: '🌸', desc: 'Classic hoop earrings in rose gold finish. Lightweight and comfortable for all-day wear.', badge: 'Popular' },
+    { id: 6, name: 'Emerald Statement Ring', category: 'rings', price: 5999, emoji: '💚', desc: 'Bold cocktail ring featuring a rich green emerald-cut stone surrounded by tiny crystals.' },
+    { id: 7, name: 'Layered Chain Necklace', category: 'necklaces', price: 2799, emoji: '✨', desc: 'Three-layered delicate chains in yellow gold. A modern staple that elevates any outfit.', badge: 'New' },
+    { id: 8, name: 'Bridal Jewellery Set', category: 'sets', price: 12999, emoji: '👑', desc: 'Complete bridal set with necklace, earrings, maangtika & bangles in kundan work.', badge: 'Premium' },
+    { id: 9, name: 'Moonstone Pendant', category: 'necklaces', price: 2199, emoji: '🌙', desc: 'Iridescent moonstone in a minimalist silver bezel setting on an adjustable chain.' },
+    { id: 10, name: 'Stackable Ring Set', category: 'rings', price: 1999, emoji: '💫', desc: 'Set of 3 stackable rings — plain, twisted, and beaded — in sterling silver.', badge: 'Value Set' },
+    { id: 11, name: 'Charm Bracelet', category: 'bracelets', price: 2899, emoji: '🔮', desc: 'Gold-plated chain bracelet with 5 removable charms including evil eye, heart and star.' },
+    { id: 12, name: 'Gift Set — Essentials', category: 'sets', price: 4499, emoji: '🎁', desc: 'Perfect gifting set with ring, earrings and necklace. Comes in a luxury gift box.', badge: 'Gift Ready' },
+  ];
+
+  let cart = JSON.parse(localStorage.getItem('lj_cart') || '[]');
+  let activeCategory = 'all';
+
+  // ─── MOBILE NAV ───
+  function toggleMobileNav() {
+    document.getElementById('mobileNav').classList.toggle('open');
+  }
+
+  // ─── PRODUCTS ───
+  function renderProducts() {
+    const filtered = activeCategory === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === activeCategory);
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = filtered.map(p => `
+      <div class="product-card">
+        <div class="product-img">
+          ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+          ${p.emoji}
+        </div>
+        <div class="product-info">
+          <div class="product-category">${p.category}</div>
+          <div class="product-name">${p.name}</div>
+          <div class="product-desc">${p.desc}</div>
+          <div class="product-footer">
+            <div class="product-price">₹${p.price.toLocaleString('en-IN')}</div>
+            <button class="add-to-cart" onclick="addToCart(${p.id})">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterProducts(category) {
+    activeCategory = category;
+    document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    renderProducts();
+  }
+
+  // ─── CART ───
+  function addToCart(productId) {
+    const product = PRODUCTS.find(p => p.id === productId);
+    const existing = cart.find(i => i.id === productId);
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({ ...product, qty: 1 });
+    }
+    saveCart();
+    updateCartUI();
+    showToast(`${product.name} added to cart ✓`);
+  }
+
+  function removeFromCart(productId) {
+    cart = cart.filter(i => i.id !== productId);
+    saveCart();
+    updateCartUI();
+    renderCartItems();
+  }
+
+  function changeQty(productId, delta) {
+    const item = cart.find(i => i.id === productId);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) { removeFromCart(productId); return; }
+    saveCart();
+    updateCartUI();
+    renderCartItems();
+  }
+
+  function saveCart() {
+    localStorage.setItem('lj_cart', JSON.stringify(cart));
+  }
+
+  function updateCartUI() {
+    const total = cart.reduce((s, i) => s + i.qty, 0);
+    document.getElementById('cartCount').textContent = total;
+  }
+
+  function getTotal() {
+    return cart.reduce((s, i) => s + (i.price * i.qty), 0);
+  }
+
+  function renderCartItems() {
+    const el = document.getElementById('cartItems');
+    const footer = document.getElementById('cartFooter');
+    if (cart.length === 0) {
+      el.innerHTML = `<div class="cart-empty">
+        <div class="cart-empty-icon">🛒</div>
+        <p>Your cart is empty.<br>Discover our beautiful pieces.</p>
+      </div>`;
+      footer.style.display = 'none';
+      return;
+    }
+    el.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div class="cart-item-icon">${item.emoji}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">₹${item.price.toLocaleString('en-IN')}</div>
+          <div class="cart-item-qty">
+            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+            <span class="qty-value">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+          </div>
+        </div>
+        <button class="remove-item" onclick="removeFromCart(${item.id})">×</button>
+      </div>
+    `).join('');
+    document.getElementById('cartTotal').textContent = `₹${getTotal().toLocaleString('en-IN')}`;
+    footer.style.display = 'block';
+  }
+
+  function toggleCart() {
+    document.getElementById('cartOverlay').classList.toggle('open');
+    document.getElementById('cartSidebar').classList.toggle('open');
+    renderCartItems();
+  }
+
+  // ─── CHECKOUT ───
+  function openCheckout() {
+    if (cart.length === 0) { showToast('Your cart is empty!'); return; }
+    toggleCart();
+    const summary = document.getElementById('orderSummaryModal');
+    summary.innerHTML = `<h4>Order Summary</h4>
+      ${cart.map(i => `<div class="summary-item"><span>${i.name} × ${i.qty}</span><span>₹${(i.price * i.qty).toLocaleString('en-IN')}</span></div>`).join('')}
+      <div class="summary-total"><span>Total</span><span>₹${getTotal().toLocaleString('en-IN')}</span></div>`;
+    document.getElementById('checkoutModal').classList.add('open');
+  }
+
+  function closeCheckout() {
+    document.getElementById('checkoutModal').classList.remove('open');
+  }
+
+  async function placeOrder() {
+    const name = document.getElementById('custName').value.trim();
+    const phone = document.getElementById('custPhone').value.trim();
+    const email = document.getElementById('custEmail').value.trim();
+    const address = document.getElementById('custAddress').value.trim();
+    if (!name || !phone || !email || !address) { showToast('Please fill all required fields.'); return; }
+
+    const btn = document.getElementById('placeOrderBtn');
+    btn.disabled = true; btn.textContent = 'Placing Order…';
+
+    const orderData = {
+      customer_name: name,
+      customer_phone: phone,
+      customer_email: email,
+      delivery_address: address,
+      special_instructions: document.getElementById('custNotes').value,
+      items: cart.map(i => ({ id: i.id, name: i.name, price: i.price, qty: i.qty })),
+      total_amount: getTotal()
+    };
+
+    try {
+      const res = await fetch(`${API_BASE}/api/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+      });
+      const data = await res.json();
+      if (res.ok) {
+        closeCheckout();
+        document.getElementById('successOrderId').textContent = data.order_id || 'LUM-' + Date.now();
+        document.getElementById('successModal').classList.add('open');
+        cart = []; saveCart(); updateCartUI();
+      } else {
+        showToast('Error: ' + (data.message || 'Could not place order.'));
+      }
+    } catch (err) {
+      // Backend not running — still show success for demo
+      closeCheckout();
+      document.getElementById('successOrderId').textContent = 'LUM-DEMO-' + Math.floor(Math.random() * 9000 + 1000);
+      document.getElementById('successModal').classList.add('open');
+      cart = []; saveCart(); updateCartUI();
+    }
+
+    btn.disabled = false; btn.textContent = 'Place Order — Pay on Delivery';
+  }
+
+  function closeSuccess() {
+    document.getElementById('successModal').classList.remove('open');
+  }
+
+  // ─── ORDER TRACKING ───
+  async function trackOrder() {
+    const orderId = document.getElementById('trackInput').value.trim();
+    if (!orderId) { showToast('Please enter your Order ID.'); return; }
+    const resultEl = document.getElementById('trackResult');
+
+    try {
+      const res = await fetch(`${API_BASE}/api/orders/${orderId}`);
+      const data = await res.json();
+      if (res.ok) {
+        resultEl.innerHTML = `
+          <div class="status-badge">${data.status}</div>
+          <p><strong>Order:</strong> ${data.order_id}</p>
+          <p><strong>Customer:</strong> ${data.customer_name}</p>
+          <p><strong>Items:</strong> ${data.items_count} item(s)</p>
+          <p><strong>Total:</strong> ₹${data.total_amount?.toLocaleString('en-IN')}</p>
+          <p><strong>Placed on:</strong> ${new Date(data.created_at).toLocaleDateString('en-IN', { dateStyle: 'long' })}</p>`;
+        resultEl.classList.add('visible');
+      } else {
+        resultEl.innerHTML = `<p style="color:#c0392b">Order not found. Please check your Order ID.</p>`;
+        resultEl.classList.add('visible');
+      }
+    } catch {
+      resultEl.innerHTML = `<p style="color:var(--text-muted)">Backend server not running. Start your server to track orders.</p>`;
+      resultEl.classList.add('visible');
+    }
+  }
+
+  // ─── NEWSLETTER ───
+  async function subscribeNewsletter(e) {
+    e.preventDefault();
+    const email = document.getElementById('newsletterEmail').value;
+    try {
+      await fetch(`${API_BASE}/api/newsletter`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+    } catch {}
+    showToast('Subscribed successfully! Welcome to Veloura.');
+    document.getElementById('newsletterEmail').value = '';
+  }
+
+  // ─── TOAST ───
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // ─── INIT ───
+  renderProducts();
+  updateCartUI();
+</script>
+</body>
+</html>

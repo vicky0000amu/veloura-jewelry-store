@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lumière Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a84c; --gold-light: #e8d5a3; --gold-dark: #9a7a2e;
+      --black: #0d0d0d; --dark: #1a1a1a; --mid: #2a2a2a;
+      --soft: #f8f5f0; --white: #fff; --text-muted: #888;
+      --sidebar-w: 240px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Jost', sans-serif; background: #f0ece6; color: var(--black); min-height: 100vh; }
+
+    /* LOGIN */
+    .login-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #0d0d0d, #1a1510);
+      padding: 1rem;
+    }
+    .login-card {
+      background: var(--white); width: 100%; max-width: 400px;
+      padding: clamp(2rem, 6vw, 3rem);
+    }
+    .login-logo {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
+      font-weight: 300; color: var(--gold); text-align: center;
+      letter-spacing: 0.1em; margin-bottom: 0.25rem;
+    }
+    .login-logo em { font-style: italic; color: var(--gold-light); }
+    .login-sub { text-align: center; color: var(--text-muted); font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    label { display: block; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    input {
+      width: 100%; background: var(--soft); border: 1px solid rgba(0,0,0,0.1);
+      padding: 0.85rem 1rem; font-family: 'Jost', sans-serif;
+      font-size: 0.9rem; outline: none; transition: border-color 0.3s;
+    }
+    input:focus { border-color: var(--gold); }
+    .login-btn {
+      width: 100%; background: var(--gold); color: var(--black); border: none;
+      padding: 1rem; font-family: 'Jost', sans-serif; font-size: 0.8rem;
+      letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer;
+      transition: all 0.3s; margin-top: 0.5rem;
+    }
+    .login-btn:hover { background: var(--gold-dark); color: var(--white); }
+    .login-err { color: #c0392b; font-size: 0.8rem; margin-top: 0.5rem; display: none; }
+
+    /* LAYOUT */
+    .app { display: flex; min-height: 100vh; display: none; }
+
+    .sidebar {
+      width: var(--sidebar-w); background: var(--dark); flex-shrink: 0;
+      display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0;
+      z-index: 100; transition: transform 0.3s;
+    }
+    .sidebar-brand {
+      padding: 1.5rem; border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .sidebar-logo {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.2rem;
+      color: var(--gold); letter-spacing: 0.1em; display: block;
+    }
+    .sidebar-logo em { font-style: italic; }
+    .sidebar-badge { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.1em; }
+
+    .sidebar-nav { flex: 1; padding: 1rem 0; }
+    .nav-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.85rem 1.5rem; color: rgba(255,255,255,0.5);
+      cursor: pointer; transition: all 0.25s; font-size: 0.85rem;
+      border-left: 2px solid transparent; letter-spacing: 0.05em;
+    }
+    .nav-item:hover { color: var(--gold-light); background: rgba(255,255,255,0.03); }
+    .nav-item.active { color: var(--gold); border-left-color: var(--gold); background: rgba(201,168,76,0.06); }
+    .nav-icon { font-size: 1rem; width: 20px; text-align: center; }
+
+    .sidebar-footer { padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .logout-btn {
+      width: 100%; background: none; border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.4); padding: 0.6rem; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em;
+      text-transform: uppercase; transition: all 0.25s;
+    }
+    .logout-btn:hover { border-color: #c0392b; color: #c0392b; }
+
+    .main {
+      flex: 1; margin-left: var(--sidebar-w);
+      display: flex; flex-direction: column; min-width: 0;
+    }
+
+    .topbar {
+      background: var(--white); border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 1rem clamp(1rem, 4vw, 2rem);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+    .topbar h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 3vw, 1.6rem); font-weight: 300; color: var(--black);
+    }
+    .menu-toggle {
+      display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer;
+    }
+
+    .content { padding: clamp(1rem, 4vw, 2rem); flex: 1; }
+
+    /* STATS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--white); padding: 1.5rem;
+      border: 1px solid rgba(0,0,0,0.06); position: relative; overflow: hidden;
+    }
+    .stat-card::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: var(--gold);
+    }
+    .stat-label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem); font-weight: 300; color: var(--black);
+    }
+    .stat-icon { position: absolute; top: 1.2rem; right: 1.2rem; font-size: 1.4rem; opacity: 0.4; }
+
+    /* TABLE */
+    .table-card { background: var(--white); border: 1px solid rgba(0,0,0,0.06); overflow: hidden; }
+    .table-header {
+      padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.06);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem;
+    }
+    .table-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; }
+
+    .filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .filter-btn {
+      background: var(--soft); border: 1px solid rgba(0,0,0,0.08);
+      padding: 0.4rem 0.9rem; font-family: 'Jost', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.25s;
+    }
+    .filter-btn:hover, .filter-btn.active { background: var(--gold); border-color: var(--gold); color: var(--black); }
+
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    th {
+      padding: 0.9rem 1rem; text-align: left; font-size: 0.68rem;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted);
+      background: var(--soft); border-bottom: 1px solid rgba(0,0,0,0.06);
+      white-space: nowrap;
+    }
+    td {
+      padding: 0.9rem 1rem; border-bottom: 1px solid rgba(0,0,0,0.04);
+      font-size: 0.85rem; vertical-align: middle;
+    }
+    tr:hover td { background: rgba(201,168,76,0.03); }
+
+    .status-pill {
+      display: inline-block; padding: 0.25rem 0.7rem;
+      font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 20px;
+    }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-confirmed { background: #d1ecf1; color: #0c5460; }
+    .status-processing { background: #d4edda; color: #155724; }
+    .status-shipped { background: #cce5ff; color: #004085; }
+    .status-delivered { background: #c3e6cb; color: #155724; }
+    .status-cancelled { background: #f8d7da; color: #721c24; }
+
+    .view-btn {
+      background: var(--black); color: var(--gold); border: none;
+      padding: 0.4rem 0.9rem; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 0.7rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: all 0.25s; white-space: nowrap;
+    }
+    .view-btn:hover { background: var(--gold); color: var(--black); }
+
+    /* ORDER DETAIL MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 500; display: none; align-items: center; justify-content: center;
+      padding: 1rem; overflow-y: auto;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white); width: 100%; max-width: 520px;
+      padding: clamp(1.5rem, 4vw, 2rem); position: relative; margin: auto;
+    }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);
+    }
+    .modal h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 300; margin-bottom: 1.25rem; color: var(--black);
+    }
+    .detail-row {
+      display: flex; justify-content: space-between; padding: 0.55rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 0.85rem;
+      gap: 1rem; flex-wrap: wrap;
+    }
+    .detail-row strong { color: var(--text-muted); font-weight: 400; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; }
+    .status-update { margin-top: 1.5rem; }
+    .status-update label { display: block; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+    select {
+      width: 100%; background: var(--soft); border: 1px solid rgba(0,0,0,0.1);
+      padding: 0.75rem 1rem; font-family: 'Jost', sans-serif;
+      font-size: 0.9rem; outline: none; margin-bottom: 0.75rem;
+    }
+    .update-btn {
+      width: 100%; background: var(--gold); color: var(--black); border: none;
+      padding: 0.85rem; cursor: pointer; font-family: 'Jost', sans-serif;
+      font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: all 0.25s;
+    }
+    .update-btn:hover { background: var(--gold-dark); color: var(--white); }
+
+    .empty-state {
+      text-align: center; padding: 3rem 1rem; color: var(--text-muted);
+    }
+    .empty-state p { font-size: 0.9rem; }
+
+    .toast {
+      position: fixed; bottom: 2rem; left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--black); color: var(--gold-light);
+      padding: 0.8rem 1.5rem; font-size: 0.82rem; z-index: 9999;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-bottom: 2px solid var(--gold); white-space: nowrap; max-width: 90vw;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .menu-toggle { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">Lumière <em>Jewels</em></div>
+    <div class="login-sub">Admin Dashboard</div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" id="loginUser" placeholder="admin" />
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" />
+    </div>
+    <div class="login-err" id="loginErr">Invalid username or password.</div>
+    <button class="login-btn" onclick="doLogin()">Sign In →</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="sidebar-logo">Lumière <em>Jewels</em></span>
+      <div class="sidebar-badge">Admin Panel</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-item active" onclick="showPage('dashboard')"><span class="nav-icon">📊</span> Dashboard</div>
+      <div class="nav-item" onclick="showPage('orders')"><span class="nav-icon">📦</span> All Orders</div>
+      <div class="nav-item" onclick="showPage('pending')"><span class="nav-icon">⏳</span> Pending</div>
+      <div class="nav-item" onclick="showPage('subscribers')"><span class="nav-icon">📧</span> Subscribers</div>
+    </nav>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem">
+        <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <h1 id="pageTitle">Dashboard</h1>
+      </div>
+      <div style="font-size:0.8rem;color:var(--text-muted)" id="adminUser">admin</div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD PAGE -->
+      <div id="page-dashboard">
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-value" id="statTotal">—</div><div class="stat-icon">📦</div></div>
+          <div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value" id="statPending">—</div><div class="stat-icon">⏳</div></div>
+          <div class="stat-card"><div class="stat-label">Delivered</div><div class="stat-value" id="statDelivered">—</div><div class="stat-icon">✅</div></div>
+          <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-value" id="statRevenue">—</div><div class="stat-icon">💰</div></div>
+        </div>
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">Recent Orders</div></div>
+          <div class="table-wrap"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="recentOrdersBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <!-- ORDERS PAGE -->
+      <div id="page-orders" style="display:none">
+        <div class="table-card">
+          <div class="table-header">
+            <div class="table-title">All Orders</div>
+            <div class="filter-row">
+              <button class="filter-btn active" onclick="filterOrders('all', this)">All</button>
+              <button class="filter-btn" onclick="filterOrders('pending', this)">Pending</button>
+              <button class="filter-btn" onclick="filterOrders('shipped', this)">Shipped</button>
+              <button class="filter-btn" onclick="filterOrders('delivered', this)">Delivered</button>
+            </div>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="allOrdersBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <!-- PENDING PAGE -->
+      <div id="page-pending" style="display:none">
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">Pending Orders</div></div>
+          <div class="table-wrap"><table><thead><tr><th>Order ID</th><th>Customer</th><th>Phone</th><th>Amount</th><th>Date</th><th>Action</th></tr></thead><tbody id="pendingOrdersBody"></tbody></table></div>
+        </div>
+      </div>
+
+      <!-- SUBSCRIBERS PAGE -->
+      <div id="page-subscribers" style="display:none">
+        <div class="table-card">
+          <div class="table-header"><div class="table-title">Newsletter Subscribers</div></div>
+          <div class="table-wrap"><table><thead><tr><th>#</th><th>Email</th><th>Subscribed On</th></tr></thead><tbody id="subscribersBody"></tbody></table></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ORDER DETAIL MODAL -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h3>Order Details</h3>
+    <div id="orderDetails"></div>
+    <div class="status-update">
+      <label>Update Status</label>
+      <select id="statusSelect">
+        <option value="pending">Pending</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="processing">Processing</option>
+        <option value="shipped">Shipped</option>
+        <option value="delivered">Delivered</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+      <button class="update-btn" onclick="updateStatus()">Update Status</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const API = 'http://localhost:5000';
+  let token = localStorage.getItem('lj_admin_token');
+  let currentOrderId = null;
+  let allOrders = [];
+  let currentFilter = 'all';
+
+  // ─── AUTH ───
+  async function doLogin() {
+    const username = document.getElementById('loginUser').value;
+    const password = document.getElementById('loginPass').value;
+    try {
+      const res = await fetch(`${API}/api/admin/login`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (res.ok && data.token) {
+        token = data.token;
+        localStorage.setItem('lj_admin_token', token);
+        localStorage.setItem('lj_admin_user', username);
+        showApp(username);
+      } else {
+        document.getElementById('loginErr').style.display = 'block';
+      }
+    } catch {
+      // Demo mode when server not running
+      if (username === 'admin' && password === 'admin123') {
+        token = 'demo-token';
+        localStorage.setItem('lj_admin_token', token);
+        showApp(username);
+      } else {
+        document.getElementById('loginErr').style.display = 'block';
+      }
+    }
+  }
+
+  function showApp(username) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    document.getElementById('adminUser').textContent = username || 'admin';
+    loadDashboard();
+  }
+
+  function logout() {
+    token = null;
+    localStorage.removeItem('lj_admin_token');
+    localStorage.removeItem('lj_admin_user');
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('app').style.display = 'none';
+  }
+
+  // ─── NAV ───
+  function showPage(page) {
+    ['dashboard','orders','pending','subscribers'].forEach(p => {
+      document.getElementById('page-' + p).style.display = p === page ? 'block' : 'none';
+    });
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    const titles = { dashboard:'Dashboard', orders:'All Orders', pending:'Pending Orders', subscribers:'Subscribers' };
+    document.getElementById('pageTitle').textContent = titles[page];
+    if (page === 'orders') loadOrders('all');
+    else if (page === 'pending') loadOrders('pending');
+    else if (page === 'subscribers') loadSubscribers();
+    else loadDashboard();
+    // Close sidebar on mobile
+    if (window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  // ─── DATA ───
+  async function apiFetch(path, opts = {}) {
+    return fetch(API + path, {
+      ...opts,
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json', ...opts.headers }
+    });
+  }
+
+  async function loadDashboard() {
+    try {
+      const res = await apiFetch('/api/admin/stats');
+      const data = await res.json();
+      document.getElementById('statTotal').textContent = data.total_orders ?? '—';
+      document.getElementById('statPending').textContent = data.pending_orders ?? '—';
+      document.getElementById('statDelivered').textContent = data.delivered_orders ?? '—';
+      document.getElementById('statRevenue').textContent = data.total_revenue ? `₹${Number(data.total_revenue).toLocaleString('en-IN')}` : '—';
+    } catch {
+      document.getElementById('statTotal').textContent = '—';
+    }
+
+    try {
+      const res = await apiFetch('/api/admin/orders?limit=10');
+      const data = await res.json();
+      allOrders = data.orders || [];
+      renderTable(document.getElementById('recentOrdersBody'), allOrders.slice(0,10), false);
+    } catch {
+      document.getElementById('recentOrdersBody').innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:2rem">Server not running. Start your backend to see orders.</td></tr>`;
+    }
+  }
+
+  async function loadOrders(filter) {
+    currentFilter = filter;
+    try {
+      const url = filter === 'all' ? '/api/admin/orders' : `/api/admin/orders?status=${filter}`;
+      const res = await apiFetch(url);
+      const data = await res.json();
+      allOrders = data.orders || [];
+      const tbody = document.getElementById(filter === 'pending' ? 'pendingOrdersBody' : 'allOrdersBody');
+      renderTable(tbody, allOrders, filter !== 'pending');
+    } catch {
+      const tbody = document.getElementById(filter === 'pending' ? 'pendingOrdersBody' : 'allOrdersBody');
+      tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:2rem">Server not running. Start your backend to see orders.</td></tr>`;
+    }
+  }
+
+  function filterOrders(f, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadOrders(f);
+  }
+
+  function renderTable(tbody, orders, showPhone) {
+    if (!orders.length) {
+      tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><p>No orders found.</p></div></td></tr>`;
+      return;
+    }
+    tbody.innerHTML = orders.map(o => `
+      <tr>
+        <td><code style="font-size:0.78rem">${o.order_id || o.id}</code></td>
+        <td>${o.customer_name}</td>
+        ${showPhone ? `<td>${o.customer_phone || '—'}</td>` : ''}
+        <td>₹${Number(o.total_amount).toLocaleString('en-IN')}</td>
+        <td><span class="status-pill status-${o.status}">${o.status}</span></td>
+        <td>${o.created_at ? new Date(o.created_at).toLocaleDateString('en-IN') : '—'}</td>
+        <td><button class="view-btn" onclick="openOrder('${o.order_id || o.id}')">View</button></td>
+      </tr>
+    `).join('');
+  }
+
+  async function loadSubscribers() {
+    try {
+      const res = await apiFetch('/api/admin/subscribers');
+      const data = await res.json();
+      const tbody = document.getElementById('subscribersBody');
+      const subs = data.subscribers || [];
+      if (!subs.length) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:2rem">No subscribers yet.</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = subs.map((s, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${s.email}</td>
+          <td>${s.created_at ? new Date(s.created_at).toLocaleDateString('en-IN') : '—'}</td>
+        </tr>
+      `).join('');
+    } catch {
+      document.getElementById('subscribersBody').innerHTML = `<tr><td colspan="3" style="text-align:center;color:var(--text-muted);padding:2rem">Server not running.</td></tr>`;
+    }
+  }
+
+  async function openOrder(orderId) {
+    currentOrderId = orderId;
+    try {
+      const res = await apiFetch(`/api/admin/orders/${orderId}`);
+      const o = await res.json();
+      document.getElementById('orderDetails').innerHTML = `
+        <div class="detail-row"><strong>Order ID</strong><span>${o.order_id}</span></div>
+        <div class="detail-row"><strong>Customer</strong><span>${o.customer_name}</span></div>
+        <div class="detail-row"><strong>Phone</strong><span>${o.customer_phone}</span></div>
+        <div class="detail-row"><strong>Email</strong><span>${o.customer_email}</span></div>
+        <div class="detail-row"><strong>Address</strong><span style="max-width:280px;text-align:right">${o.delivery_address}</span></div>
+        <div class="detail-row"><strong>Total</strong><span>₹${Number(o.total_amount).toLocaleString('en-IN')}</span></div>
+        <div class="detail-row"><strong>Status</strong><span class="status-pill status-${o.status}">${o.status}</span></div>
+        ${o.special_instructions ? `<div class="detail-row"><strong>Notes</strong><span>${o.special_instructions}</span></div>` : ''}
+      `;
+      document.getElementById('statusSelect').value = o.status;
+    } catch {
+      document.getElementById('orderDetails').innerHTML = `<p style="color:var(--text-muted)">Could not load order details. Server may be offline.</p>`;
+    }
+    document.getElementById('orderModal').classList.add('open');
+  }
+
+  function closeModal() { document.getElementById('orderModal').classList.remove('open'); }
+
+  async function updateStatus() {
+    const status = document.getElementById('statusSelect').value;
+    try {
+      const res = await apiFetch(`/api/admin/orders/${currentOrderId}/status`, {
+        method: 'PUT', body: JSON.stringify({ status })
+      });
+      if (res.ok) {
+        showToast(`Order status updated to "${status}" ✓`);
+        closeModal();
+        loadDashboard();
+      } else {
+        showToast('Failed to update status.');
+      }
+    } catch {
+      showToast('Server offline. Could not update status.');
+    }
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // Auto-login if token exists
+  if (token) {
+    showApp(localStorage.getItem('lj_admin_user') || 'admin');
+  }
+</script>
+</body>
+</html>
