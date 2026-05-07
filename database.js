@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════
-//   LUMIÈRE JEWELS — Database Setup
+//   Veloura JEWELS — Database Setup
 //   Uses SQLite — no external database needed!
 //   The database file (jewelry_store.db) is
 //   created automatically on first run.

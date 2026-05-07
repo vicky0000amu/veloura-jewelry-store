@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════
-//   LUMIÈRE JEWELS — Backend Server
+//   Veloura JEWELS — Backend Server
 //   Built with Express + SQLite (no database setup needed!)
 // ═══════════════════════════════════════════════════════════
 
@@ -53,7 +53,7 @@ function generateOrderId() {
 app.get('/', (req, res) => {
   res.json({
     status: 'running',
-    message: '✨ Lumière Jewels API is live!',
+    message: '✨ Veloura Jewels API is live!',
     version: '1.0.0'
   });
 });
